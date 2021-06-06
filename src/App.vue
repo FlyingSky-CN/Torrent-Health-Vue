@@ -3,7 +3,8 @@
     <v-main>
       <v-container>
         <div class="d-flex justify-end" style="margin-top: 16px;">
-          <v-btn elevation="0" color="primary" outlined @click="updateData(true)">Refresh</v-btn>
+          <v-btn elevation="0" color="purple" outlined @click="updateData(true, true)" style="margin-right: 8px; border-radius: 8px;">Full load</v-btn>
+          <v-btn elevation="0" color="blue" outlined @click="updateData(true, false)" style="border-radius: 8px;">Refresh</v-btn>
         </div>
         <div style="background: none; margin-bottom: 32px; margin-top: 128px;">
           <div class="text-h3">Torrent Health Tracker</div>
@@ -26,7 +27,7 @@
               Hash
             </v-tab>
           </v-tabs>
-          <v-tabs-items v-model="tab" style="min-height: 128px;">
+          <v-tabs-items v-model="tab" style="height: 256px; overflow: scroll;">
             <v-tab-item key="1" value="tab-1">
               <v-card flat>
                 <v-card-text v-html="listData(1)" style="color: rgba(0, 0, 0, 0.87);"></v-card-text>
@@ -96,10 +97,10 @@
     }),
 
     methods: {
-      updateData(nocache) {
+      updateData(nocache, fullload) {
         this.loading = true
         this.$axios
-          .get('https://phillm.net/torrent-health-frontend/stats-filtered.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag&cachets=' + (nocache ? (new Date()).valueOf() : ''))
+          .get('https://phillm.net/torrent-health-frontend/stats-filtered.php?propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag&' + ( fullload ? '' : 'propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&' ) + (nocache ? 'cachets=' + (new Date()).valueOf() : ''))
           .then(response => {
             this.table = []
             for (var i in response.data) {
@@ -144,13 +145,14 @@
     },
 
     mounted() {
-      this.updateData(true)
+      this.updateData(true, false)
     }
   };
 </script>
 
 <style>
-  body::-webkit-scrollbar {
+  body::-webkit-scrollbar,
+  .v-tabs-items::-webkit-scrollbar {
     width: 0;
     height: 0;
   }
