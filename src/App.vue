@@ -105,6 +105,7 @@
             for (var i in response.data) {
               this.table.push(response.data[i])
             }
+            this.selected = []
             this.loading = false
             this.error = false
             console.info('[Data Updated]', this.table)
@@ -143,7 +144,7 @@
     },
 
     mounted() {
-      this.updateData(false)
+      this.updateData(true)
     }
   };
 </script>
