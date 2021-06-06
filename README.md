@@ -1,4 +1,4 @@
-# torrent-health-frontend
+# Torrent-Health-Vue
 
 ## Project setup
 ```
