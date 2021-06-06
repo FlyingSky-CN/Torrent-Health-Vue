@@ -3,8 +3,8 @@
     <v-main>
       <v-container>
         <div class="d-flex justify-end" style="margin-top: 16px;">
-          <v-btn elevation="0" color="purple" outlined @click="updateData(true, true)" style="margin-right: 8px; border-radius: 8px;">Full load</v-btn>
-          <v-btn elevation="0" color="blue" outlined @click="updateData(true, false)" style="border-radius: 8px;">Refresh</v-btn>
+          <v-btn elevation="0" color="purple" @click="updateData(true, true)" style="margin-right: 16px; color: #fff; border-radius: 8px;">Full load</v-btn>
+          <v-btn elevation="0" color="blue" @click="updateData(true, false)" style="border-radius: 8px; color: #fff;">Refresh</v-btn>
         </div>
         <div style="background: none; margin-bottom: 32px; margin-top: 128px;">
           <div class="text-h3">Torrent Health Tracker</div>
@@ -50,7 +50,7 @@
           <div v-else>{{ selected.length }} Selected. {{ countSize() }} in total.</div>
         </v-card>
         <v-data-table v-model="selected" :headers="headers" :items="table" item-key="name" :loading="loading"
-          show-select calculate-widths fixed-header class="elevation-6 text-truncate"
+          show-select calculate-widths fixed-header class="elevation-6 text-truncate" :items-per-page="15"
           style="margin-bottom: 32px; border-radius: 8px;">
           <template v-slot:item.size_bytes="{ item }">
             {{ (item.size_bytes/1073741824).toFixed(2) + ' GB'}}
