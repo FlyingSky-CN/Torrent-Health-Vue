@@ -39,8 +39,9 @@
             </v-tab-item>
           </v-tabs-items>
         </v-card>
-        <v-card class="elevation-6" style="margin-bottom: 32px; border-radius: 8px;padding: 16px;" v-if="selected.length == 0">
-          Select items below to get start.
+        <v-card class="elevation-6" style="margin-bottom: 32px; border-radius: 8px;padding: 16px;">
+          <div v-if="selected.length == 0">Select items below to get start.</div>
+          <div v-else>{{ selected.length }} Selected. {{ countSize() }} in total.</div>
         </v-card>
         <v-data-table v-model="selected" :headers="headers" :items="table" item-key="name" :loading="loading"
           show-select calculate-widths fixed-header class="elevation-6 text-truncate"
@@ -114,18 +115,25 @@
         for (var i in this.selected) {
           switch (n) {
             case 1:
-              text = text + this.table[i].link.replace('gen.lib.rus.ec', 'libgen.st') + "<br/>"
+              text = text + this.selected[i].link.replace('gen.lib.rus.ec', 'libgen.st') + "<br/>"
               break;
             case 2:
-              text = text + this.table[i].link + "<br/>"
+              text = text + this.selected[i].link + "<br/>"
               break;
             case 3:
             default:
-              text = text + this.table[i].infohash + "<br/>"
+              text = text + this.selected[i].infohash + "<br/>"
               break;
           }
         }
         return text
+      },
+      countSize() {
+        var size = 0;
+        for (var i in this.selected) {
+          size += this.selected[i].size_bytes
+        }
+        return (size/1073741824).toFixed(2) + ' GB'
       }
     },
 
