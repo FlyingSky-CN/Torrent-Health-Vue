@@ -2,10 +2,15 @@
   <v-app style="background-color: #eee">
     <v-main>
       <v-container>
+        <div class="d-flex justify-end" style="margin-top: 16px;">
+          <v-btn elevation="0" color="primary" outlined @click="updateData(true)">Refresh</v-btn>
+        </div>
         <div style="background: none; margin-bottom: 32px; margin-top: 128px;">
           <div class="text-h3">Torrent Health Tracker</div>
           <div class="text-h5" style="padding-top: 8px;">Sci-Hub / Libgen / <a style="text-decoration: none"
-              href="https://phillm.net/torrent-health-frontend/stats-filtered-table.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag">Data Upstream</a> / <a href="https://zhuanlan.zhihu.com/p/376398943" style="text-decoration: none">About</a> / Count: {{table.length}}
+              href="https://phillm.net/torrent-health-frontend/stats-filtered-table.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag">Data
+              Upstream</a> / <a href="https://zhuanlan.zhihu.com/p/376398943" style="text-decoration: none">About</a> /
+            Count: {{table.length}}
           </div>
         </div>
         <v-card class="elevation-6" style="margin-bottom: 32px; border-radius: 8px;">
@@ -91,10 +96,10 @@
     }),
 
     methods: {
-      updateData() {
+      updateData(nocache) {
         this.loading = true
         this.$axios
-          .get('https://phillm.net/torrent-health-frontend/stats-filtered.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag')
+          .get('https://phillm.net/torrent-health-frontend/stats-filtered.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag&cachets=' + (nocache ? (new Date()).valueOf() : ''))
           .then(response => {
             this.table = []
             for (var i in response.data) {
@@ -133,12 +138,12 @@
         for (var i in this.selected) {
           size += this.selected[i].size_bytes
         }
-        return (size/1073741824).toFixed(2) + ' GB'
+        return (size / 1073741824).toFixed(2) + ' GB'
       }
     },
 
     mounted() {
-      this.updateData()
+      this.updateData(false)
     }
   };
 </script>
