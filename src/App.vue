@@ -39,7 +39,7 @@
             </v-tab-item>
           </v-tabs-items>
         </v-card>
-        <v-card style="margin-bottom: 32px; border-radius: 8px;padding: 16px;" v-if="selected.length == 0">
+        <v-card class="elevation-6" style="margin-bottom: 32px; border-radius: 8px;padding: 16px;" v-if="selected.length == 0">
           Select items below to get start.
         </v-card>
         <v-data-table v-model="selected" :headers="headers" :items="table" item-key="name" :loading="loading"
