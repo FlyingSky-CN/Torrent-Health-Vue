@@ -14,8 +14,7 @@
         <div style="background: none; margin-bottom: 32px; margin-top: 96px;">
           <div class="text-h3">Torrent Health Tracker</div>
           <div class="text-h5" style="padding-top: 8px;">Sci-Hub / Libgen / <a style="text-decoration: none"
-              href="https://phillm.net/torrent-health-frontend/stats-filtered-table.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag">Data
-              Upstream</a> / <a href="https://zhuanlan.zhihu.com/p/376398943" style="text-decoration: none">About</a> /
+              href="https://phillm.net/torrent-health-frontend/stats-filtered-table.php?propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag">Upstream</a> / <a href="https://zhuanlan.zhihu.com/p/376398943" style="text-decoration: none">About</a> /
             Count: {{table.length}}
           </div>
         </div>
@@ -84,7 +83,7 @@
       loading: false,
       error: false,
       table: [],
-      filter: 7,
+      filter: 9,
       tab: '',
       headers: [
         { text: 'Name', value: 'name' },
