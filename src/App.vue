@@ -3,10 +3,15 @@
     <v-main>
       <v-container>
         <div class="d-flex justify-end" style="margin-top: 16px;">
-          <v-btn elevation="0" color="purple" @click="updateData(true, true)" style="margin-right: 16px; color: #fff; border-radius: 8px;">Full load</v-btn>
-          <v-btn elevation="0" color="blue" @click="updateData(true, false)" style="border-radius: 8px; color: #fff;">Refresh</v-btn>
+          <v-btn elevation="0" color="purple" @click="updateData(true, true)"
+            style="margin-right: 16px; color: #fff; border-radius: 8px;">Full load</v-btn>
+          <v-btn elevation="0" color="blue" @click="updateData(true, false)" style="border-radius: 8px; color: #fff;">
+            Refresh</v-btn>
         </div>
-        <div style="background: none; margin-bottom: 32px; margin-top: 128px;">
+        <div class="d-flex justify-end" style="margin-top: 16px;">
+          <v-slider v-model="filter" label="Filter" style="max-width: 232px;" thumb-label :min="1" :max="20" @change="updateData(true, false)"></v-slider>
+        </div>
+        <div style="background: none; margin-bottom: 32px; margin-top: 96px;">
           <div class="text-h3">Torrent Health Tracker</div>
           <div class="text-h5" style="padding-top: 8px;">Sci-Hub / Libgen / <a style="text-decoration: none"
               href="https://phillm.net/torrent-health-frontend/stats-filtered-table.php?propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag">Data
@@ -79,6 +84,7 @@
       loading: false,
       error: false,
       table: [],
+      filter: 7,
       tab: '',
       headers: [
         { text: 'Name', value: 'name' },
@@ -100,7 +106,7 @@
       updateData(nocache, fullload) {
         this.loading = true
         this.$axios
-          .get('https://phillm.net/torrent-health-frontend/stats-filtered.php?propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag&' + ( fullload ? '' : 'propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=7&' ) + (nocache ? 'cachets=' + (new Date()).valueOf() : ''))
+          .get('https://phillm.net/torrent-health-frontend/stats-filtered.php?propname%5B%5D=type&comp%5B%5D===&value%5B%5D=scimag&' + (fullload ? '' : 'propname%5B%5D=seeders&comp%5B%5D=%3C&value%5B%5D=' + this.filter + '&') + (nocache ? 'cachets=' + (new Date()).valueOf() : ''))
           .then(response => {
             this.table = []
             for (var i in response.data) {
