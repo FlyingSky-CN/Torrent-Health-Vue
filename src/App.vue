@@ -54,7 +54,7 @@
           <div v-else>{{ selected.length }} Selected. {{ countSize() }} in total.</div>
         </v-card>
         <v-data-table v-model="selected" :headers="headers" :items="table" item-key="name" :loading="loading"
-          show-select calculate-widths fixed-header class="elevation-6 text-truncate" :items-per-page="15"
+          show-select calculate-widths fixed-header class="elevation-6 text-truncate" :items-per-page="15" multi-sort
           style="margin-bottom: 32px; border-radius: 8px;">
           <template v-slot:item.size_bytes="{ item }">
             {{ (item.size_bytes/1073741824).toFixed(2) + ' GB'}}
