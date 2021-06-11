@@ -83,7 +83,7 @@
       loading: false,
       error: false,
       table: [],
-      filter: 10,
+      filter: 9,
       tab: '',
       headers: [
         { text: 'Name', value: 'name' },
